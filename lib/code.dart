@@ -9,8 +9,14 @@ class code extends StatefulWidget {
 }
 
 class _codeState extends State<code> {
-  int gst = 0;
+  int gst = 0,amount=0;
   TextEditingController value = TextEditingController();
+  String v1="";
+  double ans=0;
+  double tax=0;
+  String c="";
+  var c1 = Colors.grey.shade300;
+  var c2 =Colors.grey.shade300;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,21 +26,24 @@ class _codeState extends State<code> {
           children: [
             Padding(
               padding: EdgeInsets.only(top: 30),
-                child: TextField(
-                  controller: value,
-                  cursorColor: Colors.grey.shade400,
-                 decoration: InputDecoration(
-                   hintText: "ORIGINAL PRICE",
-                   filled: true,
-                   fillColor: Colors.grey.shade300,
-                   enabledBorder: OutlineInputBorder(
-                     borderSide: BorderSide(color: Colors.grey.shade100,width: 2)
+                child: InkWell(
+                  child: TextField(
+                    controller: value,
+                    cursorColor: Colors.grey.shade400,
+                   decoration: InputDecoration(
+                     hintText: "ORIGINAL PRICE",
+                     filled: true,
+                     fillColor: Colors.grey.shade300,
+                     enabledBorder: OutlineInputBorder(
+                       borderSide: BorderSide(color: Colors.grey.shade100,width: 2)
+                     ),
+                     focusedBorder: OutlineInputBorder(
+                       borderSide: BorderSide(color: Colors.grey.shade600,width: 5),
+                     )
                    ),
-                   focusedBorder: OutlineInputBorder(
-                     borderSide: BorderSide(color: Colors.grey.shade600,width: 5),
-                   )
-                 ),
-                )),
+                  ),
+                ),
+            ),
             Container(
               margin: EdgeInsets.only(top: 20),
               height: 110,
@@ -54,12 +63,14 @@ class _codeState extends State<code> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 15,top: 30),
+                        color: c1,
                         height: 50,
                         width: 90,
                         child: Center(
                           child: InkWell(
                             onTap: (){
                               setState(() {
+                              c1 = Colors.red;
                                 gst = 3;
                               });
                             },
@@ -77,10 +88,12 @@ class _codeState extends State<code> {
                         margin: EdgeInsets.only(left: 5,top: 30),
                         height: 50,
                         width: 90,
+                        color: c2,
                         child: Center(
                           child: InkWell(
                             onTap: (){
                               setState(() {
+                                c2 = Colors.red;
                                 gst = 5;
                               });
                             },
@@ -188,7 +201,7 @@ class _codeState extends State<code> {
                     width: 110,
                     child: Center(
                       child: Text(
-                        "1050.00 Rs",
+                        "$ans Rs",
                         style: TextStyle(
                           fontSize: 20,
                         ),
@@ -199,19 +212,50 @@ class _codeState extends State<code> {
               ),
             ),
             SizedBox(height: 20,),
-            Container(
-              height: 90,
-              width: 200,
-              child: Center(child: Text("CGST/SGST\n         25",
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.black,
-              ),
-              )),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(10)
-              ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 50),
+                  height: 90,
+                  width: 200,
+                  child: Center(child: Text("CGST/SGST\n         25",
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
+                    ),
+                  )),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 50),
+                  height: 90,
+                  width: 200,
+                  child: Center(child: InkWell(
+                    onTap: (){
+                      setState(() {
+                        v1=value.text;
+                        amount=int.parse(v1);
+                        tax = amount*(gst/100);
+                        ans=amount+tax;
+                      });
+                    },
+                    child: Text("Calculate",
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+
+              ],
             ),
             SizedBox(height: 20,),
             Container(
@@ -362,6 +406,22 @@ class _codeState extends State<code> {
                         margin: EdgeInsets.only(left: 17.5),
                         height: 229.5,
                         width: 120,
+                        child: Center(
+                          child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                ans=0;
+                               value.text="";
+                              });
+                            },
+                            child: Text("AC",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                            ),
+                            ),
+                          ),
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.deepOrange,
                           borderRadius: BorderRadius.only(
@@ -373,18 +433,30 @@ class _codeState extends State<code> {
                         ),
                       ),
                       SizedBox(height: 10,),
-                      Container(
-                        margin: EdgeInsets.only(left: 17.5),
-                        height: 219.5,
-                        width: 120,
-                        decoration: BoxDecoration(
-                            color: Colors.deepOrange,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(65),
-                                topLeft: Radius.circular(65),
-                                bottomLeft: Radius.circular(65),
-                                bottomRight: Radius.circular(65)
-                            )
+                      InkWell(
+                        onTap: (){
+                          setState(() {
+                            List<String> c = v1.split(""); // ['a', 'a', 'a', 'b', 'c', 'd']
+                            c.removeLast();
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(left: 17.5,),
+                          height: 219.5,
+                          width: 120,
+                          child: Icon(Icons.delete_outlined,
+                            size: 35,
+                            color: Colors.white,
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(65),
+                                  topLeft: Radius.circular(65),
+                                  bottomLeft: Radius.circular(65),
+                                  bottomRight: Radius.circular(65)
+                              )
+                          ),
                         ),
                       ),
                     ],
