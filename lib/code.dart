@@ -10,6 +10,7 @@ class code extends StatefulWidget {
 
 class _codeState extends State<code> {
   int gst = 0;
+  TextEditingController value = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,6 +21,7 @@ class _codeState extends State<code> {
             Padding(
               padding: EdgeInsets.only(top: 30),
                 child: TextField(
+                  controller: value,
                   cursorColor: Colors.grey.shade400,
                  decoration: InputDecoration(
                    hintText: "ORIGINAL PRICE",
@@ -199,7 +201,7 @@ class _codeState extends State<code> {
             SizedBox(height: 20,),
             Container(
               height: 90,
-              width: double.infinity,
+              width: 200,
               child: Center(child: Text("CGST/SGST\n         25",
               style: TextStyle(
                 fontSize: 25,
@@ -213,7 +215,7 @@ class _codeState extends State<code> {
             ),
             SizedBox(height: 20,),
             Container(
-              height: 479,
+              height: 469,
               width: double.infinity,
               child: Row(
                 children: [
@@ -370,10 +372,10 @@ class _codeState extends State<code> {
                           )
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 10,),
                       Container(
                         margin: EdgeInsets.only(left: 17.5),
-                        height: 229.5,
+                        height: 219.5,
                         width: 120,
                         decoration: BoxDecoration(
                             color: Colors.deepOrange,
