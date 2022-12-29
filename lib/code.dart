@@ -28,7 +28,7 @@ class _codeState extends State<code> {
               padding: EdgeInsets.only(top: 30),
                 child: InkWell(
                   child: TextField(
-                    controller: value,
+                    controller: ,
                     cursorColor: Colors.grey.shade400,
                    decoration: InputDecoration(
                      hintText: "ORIGINAL PRICE",
